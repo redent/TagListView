@@ -56,6 +56,7 @@ public class TagListView: UIView {
         }
     }
     
+    @IBInspectable public dynamic var cornerRadius_: CGFloat { get { return cornerRadius } set { cornerRadius = newValue } }
     @IBInspectable public dynamic var cornerRadius: CGFloat = 0 {
         didSet {
             for tagView in tagViews {
@@ -63,6 +64,7 @@ public class TagListView: UIView {
             }
         }
     }
+    @IBInspectable public dynamic var borderWidth_: CGFloat { get { return borderWidth } set { borderWidth = newValue } }
     @IBInspectable public dynamic var borderWidth: CGFloat = 0 {
         didSet {
             for tagView in tagViews {
@@ -71,6 +73,7 @@ public class TagListView: UIView {
         }
     }
     
+    @IBInspectable public dynamic var borderColor_: UIColor? { get { return borderColor } set { borderColor = newValue } }
     @IBInspectable public dynamic var borderColor: UIColor? {
         didSet {
             for tagView in tagViews {
@@ -79,6 +82,7 @@ public class TagListView: UIView {
         }
     }
     
+    @IBInspectable public dynamic var selectedBorderColor_: UIColor? { get { return selectedBorderColor } set { selectedBorderColor = newValue } }
     @IBInspectable public dynamic var selectedBorderColor: UIColor? {
         didSet {
             for tagView in tagViews {
