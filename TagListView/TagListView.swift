@@ -310,7 +310,7 @@ open class TagListView: UIView {
         tagView.removeButton.addTarget(self, action: #selector(removeButtonPressed(_:)), for: .touchUpInside)
         
         // On long press, deselect all tags except this one
-        tagView.onLongPress = { this in
+        tagView.onLongPress = { [unowned self] this in
             for tag in self.tagViews {
                 tag.isSelected = (tag == this)
             }
@@ -324,6 +324,25 @@ open class TagListView: UIView {
         return addTagView(createNewTagView(title))
     }
     
+    @discardableResult
+    open func addTags(_ titles: [String]) -> [TagView] {
+        var tagViews: [TagView] = []
+        for title in titles {
+            tagViews.append(createNewTagView(title))
+        }
+        return addTagViews(tagViews)
+    }
+    
+    @discardableResult
+    open func addTagViews(_ tagViews: [TagView]) -> [TagView] {
+        for tagView in tagViews {
+            self.tagViews.append(tagView)
+            tagBackgroundViews.append(UIView(frame: tagView.bounds))
+        }
+        rearrangeViews()
+        return tagViews
+    }
+
     @discardableResult
     open func insertTag(_ title: String, at index: Int) -> TagView {
         return insertTagView(createNewTagView(title), at: index)
@@ -345,6 +364,10 @@ open class TagListView: UIView {
         rearrangeViews()
         
         return tagView
+    }
+    
+    open func setTitle(_ title: String, at index: Int) {
+        tagViews[index].titleLabel?.text = title
     }
     
     open func removeTag(_ title: String) {
