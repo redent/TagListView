@@ -118,6 +118,18 @@ open class TagListView: UIView {
         }
     }
     
+    @IBInspectable open dynamic var maxTagRows: Int = 0 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    @IBInspectable open dynamic var maxTags: Int = 0 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     @objc public enum Alignment: Int {
         case left
         case center
@@ -232,11 +244,15 @@ open class TagListView: UIView {
         var currentRowView: UIView!
         var currentRowTagCount = 0
         var currentRowWidth: CGFloat = 0
-        for (index, tagView) in tagViews.enumerated() {
+        let filteredTagViews = maxTags > 0 ? Array(tagViews.prefix(maxTags)) : tagViews
+        for (index, tagView) in filteredTagViews.enumerated() {
             tagView.frame.size = tagView.intrinsicContentSize
             tagViewHeight = tagView.frame.height
             
             if currentRowTagCount == 0 || currentRowWidth + tagView.frame.width > frame.width {
+                if maxTagRows > 0 && currentRow >= maxTagRows {
+                    break
+                }
                 currentRow += 1
                 currentRowWidth = 0
                 currentRowTagCount = 0
